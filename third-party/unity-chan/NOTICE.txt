@@ -1,0 +1,17 @@
+(c) Unity Technologies Japan/UCL
+
+This work is provided under the Unity-Chan License Terms (Unity-chan License 3.0).
+Anyone who receives these images, or a mod jar made from them, receives them under the same license.
+
+The license files in license/ are unchanged copies from Unity Technologies Japan:
+  EN_Unity-Chan License Terms and Condition_UCL3.0.pdf
+  JP_Unity-Chan License Terms and Condition_UCL3.0.pdf (the Japanese text prevails)
+  logo/ (the license logos)
+  03Indication of License_EN_UCL2.02.pdf (license notation rules)
+
+Changes: sprite frames of the character Unity-chan (Kohaku Otori), posed with a rifle, animated and rendered from the
+"UnityChan_v1.4.0" model by Fog of War Labs. Only rendered images are included, no model, texture or animation data.
+The rifle is a CC0 model by Quaternius, not part of the Unity-chan data: see license/THIRD-PARTY-GUN.txt.
+
+This is a fan-made derivative work. It is not official and is not provided, sold or endorsed by
+Unity Technologies Japan K.K. or Unity Technologies.

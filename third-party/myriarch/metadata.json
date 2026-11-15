@@ -1,0 +1,583 @@
+{
+  "format": "sc4j-bake-intermediate 1",
+  "subject": "the giant monster Myriarch: the dragon DRAGO",
+  "license": "CC BY 4.0: DRAGO by OSCAR CREATIVO, see NOTICE.txt and license/",
+  "blender": "5.2.3 LTS",
+  "scripts": [
+    "scripts/bake_common.py",
+    "scripts/drago.py",
+    "scripts/drago_motion.py",
+    "scripts/bake.py",
+    "scripts/supersample.py",
+    "scripts/postprocess.py",
+    "scripts/run_blender.ps1",
+    "scripts/postprocess_layers.py",
+    "scripts/compact.py",
+    "scripts/ui_art.py",
+    "scripts/ui_postprocess.py"
+  ],
+  "model": "DRAGO 3D MODEL FREE BY Oscar Creativo by OSCAR CREATIVO (Sketchfab, CC BY 4.0), glTF importer only, 337k triangles, 97 bones, one clip MOTION (489 frames at 24 fps, a perched showcase: no walk, attack, death or flight); the display rock removed; hover, flight, fire breath and fall authored on its armature",
+  "fit": "turned to face north-south by its body axis (hips to neck), put on the ground (it stood on a rock), centred across on its hips and along on its bounds, the reference pose levelled (body axis pitch, hip roll and heading 0 within 0.01 deg); tail bones from Tail_05 on scaled 0.45; model scaled 0.37 (at rest 4.8 m long, 3.9 m across, 1.4 m high); textures and materials unchanged; no decimation (Eevee renders the full mesh); in every authored frame the hips fly 1.41 m above the ground, so the body is drawn around the image position and its ground point and shadow lie 42 SD px below it, as a native air unit's shadow",
+  "renderer": "Eevee, 16 samples, Standard view transform, transparent film, pixel filter 1.0; rendered at 1008 px (160 px per metre) and reduced by 2 to the HD2 canvas (supersample.py: premultiplied Lanczos for colour/albedo, premultiplied box for mask, shadow and data layers)",
+  "supersample": 2,
+  "quality": "hd2",
+  "camera": {
+    "projection": "orthographic",
+    "elevationDegrees": 42.0,
+    "lookingNorth": true,
+    "hdPixelsPerMeter": 160.0,
+    "framePixelsPerMeter": 80.0,
+    "sdPixelsPerMeter": 40.0,
+    "canvas": 504,
+    "sdCanvas": 252,
+    "groundOffsetSd": 42
+  },
+  "light": {
+    "key": "sun from the screen upper left (azimuth 135 deg = world -X,+Y), elevation 50 deg",
+    "rim": "sun from behind on the upper left (azimuth 115 deg, elevation 28 deg), energy 2.6 (key 3.2)",
+    "shadowProjection": "planar onto the ground along azimuth 135 deg, elevation 80 deg"
+  },
+  "scale": {
+    "textureScale": 2,
+    "sd": "HD2 downscaled by 2 by the converter",
+    "standingHeightPx": {
+      "southHd2": 260,
+      "eastHd2": 294,
+      "eastWidthHd2": 406
+    }
+  },
+  "directions": {
+    "count": 17,
+    "stepDegrees": 11.25,
+    "index0": "north (up)",
+    "index8": "east (right)",
+    "index16": "south (down)",
+    "clockwise": true,
+    "mirrored": "facings 17..31 = horizontal flip of facings 15..1; frames are symmetric about the pivot x"
+  },
+  "files": {
+    "color": "hd2/{animation}/d{direction:02}_f{frame:02}.png (RGBA, straight alpha)",
+    "mask": "hd2/{animation}/d{direction:02}_f{frame:02}_mask.png (L, 255 = team colour)",
+    "shadow": "hd2/{animation}/d{direction:02}_f{frame:02}_shadow.png (RGBA black, soft alpha, max 50%)",
+    "pivotNote": "pivot = ground point under the centre of the body's bounds (42 SD px below the image position, groundOffsetSd), as the pixel-corner offset from the top-left; colour, mask and shadow share frame size and pivot",
+    "layers": {
+      "bright": "hd2/{animation}/d{direction:02}_f{frame:02}_bright.png",
+      "normal": "hd2/{animation}/d{direction:02}_f{frame:02}_normal.png",
+      "specular": "hd2/{animation}/d{direction:02}_f{frame:02}_specular.png",
+      "ao_depth": "hd2/{animation}/d{direction:02}_f{frame:02}_ao_depth.png",
+      "note": "same frame size and pivot as the colour frame; 'diffuse' = the colour frame, 'teamcolor' = the _mask frame; no emissive layer. SD stays diffuse + mask (the SD path has no lighting). To keep the files small the channels the renderer does not read are stored as 0 (normal G and B, ao_depth R and B) and the specular layer is one opaque grey channel."
+    }
+  },
+  "teamColor": "the outer half of every spike on the back, head and tail (small accents); the wing membranes keep their texture colour",
+  "animations": {
+    "idle": {
+      "clip": "AUTHORED (keyframes on the model's armature, drago_motion.py)",
+      "clipFrames": [
+        901,
+        902,
+        903,
+        904,
+        905,
+        906,
+        907,
+        908
+      ],
+      "loop": true,
+      "playOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "durationMs": [
+        126,
+        126,
+        126,
+        126,
+        126,
+        126,
+        126,
+        126
+      ],
+      "note": "authored hover: one slow wing beat per loop (dihedral 5 +- 28 deg, the fingers a little later), body bob 5 cm, tail sway, hips 1.41 m above the ground, legs tucked",
+      "frameCount": 8,
+      "frameSize": {
+        "hd2": [
+          504,
+          504
+        ]
+      },
+      "pivot": {
+        "hd2": [
+          252,
+          336
+        ]
+      },
+      "layers": {
+        "hd2": [
+          "diffuse",
+          "bright",
+          "teamcolor",
+          "normal",
+          "specular",
+          "ao_depth"
+        ],
+        "sd": [
+          "diffuse",
+          "teamcolor"
+        ]
+      }
+    },
+    "walk": {
+      "clip": "AUTHORED (keyframes on the model's armature, drago_motion.py)",
+      "clipFrames": [
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1010,
+        1011,
+        1012,
+        1013,
+        1014,
+        1015,
+        1016
+      ],
+      "loop": true,
+      "playOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "durationMs": [
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84
+      ],
+      "note": "authored flight loop: one wing beat per loop (dihedral 5 +- 40 deg, the fingers a little later, fan closing in the upstroke), body bob 5 cm, tail sway; the unit's flingy entry moves it",
+      "frameCount": 16,
+      "frameSize": {
+        "hd2": [
+          504,
+          500
+        ]
+      },
+      "pivot": {
+        "hd2": [
+          252,
+          332
+        ]
+      },
+      "layers": {
+        "hd2": [
+          "diffuse",
+          "bright",
+          "teamcolor",
+          "normal",
+          "specular",
+          "ao_depth"
+        ],
+        "sd": [
+          "diffuse",
+          "teamcolor"
+        ]
+      }
+    },
+    "attack": {
+      "clip": "AUTHORED (keyframes on the model's armature, drago_motion.py)",
+      "clipFrames": [
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1109,
+        1110
+      ],
+      "loop": false,
+      "playOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "durationMs": [
+        84,
+        84,
+        84,
+        84,
+        126,
+        126,
+        126,
+        84,
+        84,
+        84
+      ],
+      "actionFrames": [
+        4
+      ],
+      "note": "authored fire breath while hovering: the head rears with opening jaws (frames 0..3), then thrusts forward and down with the jaws wide open, the breath from the action frame (the separate fire overlay image), and recovers",
+      "frameCount": 10,
+      "frameSize": {
+        "hd2": [
+          504,
+          504
+        ]
+      },
+      "pivot": {
+        "hd2": [
+          252,
+          336
+        ]
+      },
+      "layers": {
+        "hd2": [
+          "diffuse",
+          "bright",
+          "teamcolor",
+          "normal",
+          "specular",
+          "ao_depth"
+        ],
+        "sd": [
+          "diffuse",
+          "teamcolor"
+        ]
+      }
+    },
+    "death": {
+      "clip": "AUTHORED (keyframes on the model's armature, drago_motion.py)",
+      "clipFrames": [
+        1201,
+        1202,
+        1203,
+        1204,
+        1205,
+        1206,
+        1207,
+        1208,
+        1209,
+        1210
+      ],
+      "loop": false,
+      "playOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "durationMs": [
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        126,
+        168,
+        168
+      ],
+      "holdLastFrame": true,
+      "note": "authored fall out of the air: the wings stop and crumple, the body tips nose down, rolls to its right and drops to the ground (faster and faster), lying there with the wings spread; last frame held",
+      "frameCount": 10,
+      "frameSize": {
+        "hd2": [
+          504,
+          452
+        ]
+      },
+      "pivot": {
+        "hd2": [
+          252,
+          284
+        ]
+      },
+      "layers": {
+        "hd2": [
+          "diffuse",
+          "bright",
+          "teamcolor",
+          "normal",
+          "specular",
+          "ao_depth"
+        ],
+        "sd": [
+          "diffuse",
+          "teamcolor"
+        ]
+      }
+    }
+  },
+  "bake": {
+    "renderedFrames": 748,
+    "blenderSeconds": 661.8,
+    "outputFiles": 2244,
+    "outputBytes": 81178379
+  },
+  "lightingLayers": {
+    "source": "scr-render HdImageLoader (layer selection), HdSceneRenderer (deferred sprite shader), HdLighting (resolve shader), scr-data AnimFile (layer table)",
+    "animLayerNames": [
+      "diffuse",
+      "bright",
+      "teamcolor",
+      "normal",
+      "specular",
+      "ao_depth"
+    ],
+    "bright": "RGBA, the colour frame divided by the resolve shader's directional light (lambert of the normal layer times AO, at least 0.5) times 0.88, so the lit unit looks like the unlit one under that light (the model's base colour textures are nearly black, its look comes from glossy scales); alpha = the colour frame's alpha",
+    "normal": "the model's normal maps; R = x, A = y (each n * 0.5 + 0.5), +x = screen right, +y = screen up; G and B are viewing copies the converter clears; tilt blended with the viewer direction by normalStrength; outside the silhouette (128,128,255,128) = the renderer's flat default",
+    "specular": "grey 0.336 * (1 - roughness) from the model's roughness texture, at least specularFloor (41); A = 255; outside (0,0,0,255)",
+    "ao_depth": "G = ambient occlusion (Eevee AO node, distance 0.6 m), A = depth 0.25 at the ground point plus 0.075 per metre the surface stands out towards the viewer (world -Y), clamped to 0..1: about 0.08 .. 0.42 over the body (native Goliath range); R and B copies; outside (255,255,255,0)",
+    "normalStrength": 0.5,
+    "specularFloor": 41,
+    "depthFactor": 1.0,
+    "renderedFrames": 748,
+    "blenderSeconds": 478.3,
+    "outputFiles": 2992,
+    "outputBytes": 149860716,
+    "checks": {
+      "colorCropMismatches": 0,
+      "brightPixelsClipped": 1023762
+    }
+  },
+  "compact": "colour and bright frames quantized to the 5:6:5 bits of a DXT colour endpoint, normal (R, A) and ao_depth (G, A) to 6 bits (middle of each step), to keep the tracked PNG files small; the converter output keeps the same precision",
+  "portrait": {
+    "format": "WebM VP9 from Blender's FFmpeg, 10 fps, opaque; SD 60x56, HD2 224x240, HD 448x480 (the installed portrait clips' sizes); idle clips Fid00..03, talking clips Tlk00..02",
+    "sizes": {
+      "hd": [
+        448,
+        480
+      ],
+      "hd2": [
+        224,
+        240
+      ],
+      "sd": [
+        60,
+        56
+      ]
+    },
+    "clips": {
+      "Fid00": {
+        "frames": 10,
+        "kind": "idle",
+        "content": "calm standing (clip frames 404..452), small nod"
+      },
+      "Fid01": {
+        "frames": 10,
+        "kind": "idle",
+        "content": "calm standing, head turns to its left and back"
+      },
+      "Fid02": {
+        "frames": 10,
+        "kind": "idle",
+        "content": "calm standing, head tilt"
+      },
+      "Fid03": {
+        "frames": 15,
+        "kind": "idle",
+        "content": "clip frames 300..340, head turns to its right with a tilt"
+      },
+      "Tlk00": {
+        "frames": 10,
+        "kind": "talking",
+        "content": "growl: the roar's jaws open and close (clip frames 88..124)"
+      },
+      "Tlk01": {
+        "frames": 10,
+        "kind": "talking",
+        "content": "growl, wider opening"
+      },
+      "Tlk02": {
+        "frames": 10,
+        "kind": "talking",
+        "content": "growl, two openings"
+      }
+    },
+    "files": {
+      "frames": "portrait/{set}/{clip}_f{frame:02}.png (RGB, opaque; not in the repository)",
+      "clips": "portrait/{set}/{clip}.webm"
+    },
+    "render": "Eevee 32 samples, perspective camera in front on the dragon's left, following the head, warm key from the upper left, violet rim from the right back, dark warm backdrop; HD rendered at 448x480, HD2 = HD Lanczos /2, SD rendered at 480x448 and Lanczos-reduced to 60x56"
+  },
+  "wireframe": {
+    "layout": "a strip of square cells, cells 0..3 the white masks of the damage parts, 4..5 the shield outlines (HD and HD2 also cell 6, the whole picture, and an empty cell 7); SD 384x64, HD2 1024x128, HD 2048x256; SD grpwire/tranwire 192x32",
+    "parts": {
+      "0": "head and neck",
+      "1": "body, back and tail",
+      "2": "legs",
+      "3": "wings"
+    },
+    "partMethod": "vertex part = part of its strongest bone (head, neck, jaw, tongue, eyes -> 0, leg and toe bones -> 2, shoulder, arm, hand and finger bones (the wings) -> 3, other bones -> 1); lines = silhouette, part borders, creases over 52 deg and depth steps on the 1024 px render, put on the nearer pixel's part",
+    "pose": "the levelled idle (authored frame 901), facing index 19 (towards the screen left), orthographic, 20 deg down",
+    "files": {
+      "hd": "wireframe/hd/wirefram.png",
+      "hd2": "wireframe/hd2/wirefram.png",
+      "sd": "wireframe/sd/wirefram.png, grpwire.png, tranwire.png"
+    },
+    "groupFrames": {
+      "hd": {
+        "size": [
+          102,
+          50
+        ],
+        "offset": [
+          0,
+          42
+        ]
+      },
+      "hd2": {
+        "size": [
+          52,
+          26
+        ],
+        "offset": [
+          0,
+          20
+        ]
+      }
+    },
+    "linePixelsHd": [
+      703,
+      967,
+      676,
+      2703
+    ]
+  },
+  "commandIcon": {
+    "format": "grey with one-bit alpha: SD 32x32, HD2 64x64, HD 128x128",
+    "render": "head with open jaws (the attack's rear-up, authored frame 1102), facing index 21, orthographic 22 deg down, Eevee; grey = luminance with levels matched to the native Marine/Ghost icons (HD 5/50/95 % = 6/50/215, SD 8/41/120); alpha >= 128 -> opaque",
+    "files": {
+      "hd": "icon/hd/cmdicon.png",
+      "hd2": "icon/hd2/cmdicon.png",
+      "sd": "icon/sd/cmdicon.png"
+    },
+    "sizes": {
+      "hd": {
+        "size": [
+          128,
+          128
+        ],
+        "visibleBox": [
+          29,
+          0,
+          128,
+          105
+        ],
+        "visibleSize": [
+          99,
+          105
+        ]
+      },
+      "hd2": {
+        "size": [
+          64,
+          64
+        ],
+        "visibleBox": [
+          15,
+          0,
+          64,
+          52
+        ],
+        "visibleSize": [
+          49,
+          52
+        ]
+      },
+      "sd": {
+        "size": [
+          32,
+          32
+        ],
+        "visibleBox": [
+          7,
+          0,
+          32,
+          26
+        ],
+        "visibleSize": [
+          25,
+          26
+        ]
+      }
+    }
+  },
+  "uiArt": {
+    "reports": {
+      "portrait": {
+        "frames": 75,
+        "seconds": 79.3,
+        "blender": "5.2.3 LTS"
+      },
+      "wire": {
+        "frames": 4,
+        "blender": "5.2.3 LTS",
+        "seconds": 16.0
+      },
+      "icon": {
+        "frames": 1,
+        "blender": "5.2.3 LTS",
+        "seconds": 15.2
+      },
+      "encode": {
+        "clips": 21,
+        "blender": "5.2.3 LTS",
+        "seconds": 22.9
+      }
+    },
+    "outputFiles": 258,
+    "outputBytes": 35069575
+  }
+}

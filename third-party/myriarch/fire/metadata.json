@@ -1,0 +1,112 @@
+{
+  "format": "sc4j-bake-intermediate 1",
+  "subject": "the Myriarch's fire breath, an overlay image of its attack",
+  "license": "own procedural render of the project (no third-party material); shipped with the Myriarch art set",
+  "blender": "5.2.3 LTS",
+  "scripts": [
+    "scripts/bake_common.py",
+    "scripts/drago.py",
+    "scripts/drago_motion.py",
+    "scripts/fire.py",
+    "scripts/supersample.py",
+    "scripts/fire_post.py",
+    "scripts/run_blender.ps1"
+  ],
+  "design": "70 soft glowing balls along a cone 2.3 m long and up to 0.9 m wide from the mouth, white-yellow at the root cooling to dark red at the tip, pointing along the head of the Myriarch's attack frame 5 tilted 10 deg down; frames: ignite, grow, full, full, flicker, burning off from the root twice; (share of the length reached, share burnt off at the root, opacity) = [(0.55, 0.0, 1.0), (1.0, 0.0, 1.0), (1.0, 0.04, 0.95), (1.0, 0.12, 0.9), (0.95, 0.3, 0.65), (0.9, 0.55, 0.35)]",
+  "renderer": "Eevee, 16 samples, Standard view transform, transparent film; rendered at 1008 px (160 px per metre), the camera shifted per direction so that the breath's root is the canvas centre, reduced by 2 to the HD2 canvas",
+  "supersample": 2,
+  "quality": "hd2",
+  "camera": {
+    "projection": "orthographic",
+    "elevationDegrees": 42.0,
+    "lookingNorth": true,
+    "framePixelsPerMeter": 80.0,
+    "sdPixelsPerMeter": 40.0,
+    "canvas": 504,
+    "sdCanvas": 252,
+    "groundOffsetSd": 0
+  },
+  "directions": {
+    "count": 17,
+    "stepDegrees": 11.25,
+    "index0": "north (up)",
+    "index8": "east (right)",
+    "index16": "south (down)",
+    "clockwise": true,
+    "mirrored": "facings 17..31 = horizontal flip of facings 15..1 about the pivot"
+  },
+  "files": {
+    "color": "hd2/{animation}/d{direction:02}_f{frame:02}.png (RGBA, straight alpha)",
+    "mask": "hd2/{animation}/d{direction:02}_f{frame:02}_mask.png (L, all 0: no team colour)",
+    "shadow": "hd2/{animation}/d{direction:02}_f{frame:02}_shadow.png (empty: the breath casts no shadow)",
+    "pivotNote": "pivot = the breath's root at the mouth, the image's origin, which the Myriarch's script places with the overlay offsets of its frames (overlay-offsets.json of the unit set)",
+    "layers": {
+      "bright": "hd2/{animation}/d{direction:02}_f{frame:02}_bright.png",
+      "normal": "hd2/{animation}/d{direction:02}_f{frame:02}_normal.png",
+      "specular": "hd2/{animation}/d{direction:02}_f{frame:02}_specular.png",
+      "ao_depth": "hd2/{animation}/d{direction:02}_f{frame:02}_ao_depth.png",
+      "emissive": "hd2/{animation}/d{direction:02}_f{frame:02}_emissive.png",
+      "note": "bright black with the colour's alpha, emissive the premultiplied colour (A 255 where lit), normal flat (128, 128, 255, 128), specular (0, 0, 0, 255), ao_depth G 255 and A 0.35 inside, the renderer's default outside"
+    }
+  },
+  "animations": {
+    "fire": {
+      "frameCount": 6,
+      "frameSize": {
+        "hd2": [
+          352,
+          260
+        ]
+      },
+      "pivot": {
+        "hd2": [
+          176,
+          68
+        ]
+      },
+      "playOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "durationMs": [
+        126,
+        126,
+        126,
+        84,
+        84,
+        84
+      ],
+      "loop": false,
+      "emissiveFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "layers": {
+        "hd2": [
+          "diffuse",
+          "bright",
+          "teamcolor",
+          "emissive",
+          "normal",
+          "specular",
+          "ao_depth"
+        ],
+        "sd": [
+          "diffuse",
+          "teamcolor"
+        ]
+      },
+      "note": "plays once; the image ends after its last frame"
+    }
+  },
+  "outputFiles": 816,
+  "outputBytes": 3513831
+}

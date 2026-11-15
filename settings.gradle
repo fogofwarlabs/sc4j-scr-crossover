@@ -1,0 +1,53 @@
+pluginManagement {
+    // The engine checkout gives the mod plugin when it is there: the Gradle property sc4j.engine.dir, else ../sc4j next to this
+    // checkout; -Psc4j.engine.local=false takes the published one.
+    def engineFolder = file(providers.gradleProperty('sc4j.engine.dir').getOrElse('../sc4j'))
+    if (new File(engineFolder, 'sc4j-engine').isDirectory() && providers.gradleProperty('sc4j.engine.local').getOrElse('true') != 'false') {
+        includeBuild(new File(engineFolder, 'build-logic'))
+    }
+    // The conventions of the SC:R builds (org.fogofwarlabs.sc4j.scr.*), from the SC:R build.
+    includeBuild('scr/build-logic') {
+        name = 'scr-build-logic'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url = 'https://central.sonatype.com/repository/maven-snapshots/'
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+    }
+    // The mod plugin of the engine version that the SC:R build names, so that the clone compiles against the engine of scr.jar.
+    def scrBuildProperties = new Properties()
+    file('scr/gradle.properties').withReader('UTF-8') { reader -> scrBuildProperties.load(reader) }
+    plugins {
+        id 'org.fogofwarlabs.sc4j.mod' version scrBuildProperties.getProperty('sc4jVersion')
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven {
+            url = 'https://central.sonatype.com/repository/maven-snapshots/'
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+    }
+}
+
+rootProject.name = 'scr-crossover'
+
+// The SC:R build (the submodule scr): its modules, test fixtures and scr.jar, and the main sources that the clone copies.
+includeBuild('scr')
+
+// The engine checkout (sc4j.engine.dir, else ../sc4j), when it is there, gives the engine modules (org.fogofwarlabs.sc4j:*) of this
+// build and of the SC:R build; -Psc4j.engine.local=false resolves the published ones.
+def engineFolder = file(providers.gradleProperty('sc4j.engine.dir').getOrElse('../sc4j'))
+if (new File(engineFolder, 'sc4j-engine').isDirectory() && providers.gradleProperty('sc4j.engine.local').getOrElse('true') != 'false') {
+    includeBuild(engineFolder) {
+        name = 'sc4j'
+    }
+}

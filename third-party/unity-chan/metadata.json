@@ -1,0 +1,615 @@
+{
+  "format": "sc4j-bake-intermediate 1",
+  "subject": "Unity-chan (Kohaku Otori) as a Terran-style infantry unit",
+  "license": "Unity-Chan License Terms 3.0, see license/NOTICE.txt",
+  "blender": "5.2.3 LTS",
+  "scripts": [
+    "scripts/bake_common.py",
+    "scripts/bake.py",
+    "scripts/postprocess.py",
+    "scripts/supersample.py",
+    "scripts/run_blender.ps1",
+    "scripts/run.sh",
+    "scripts/run_e12i_bake.sh",
+    "scripts/postprocess_layers.py",
+    "scripts/ui_art.py",
+    "scripts/ui_postprocess.py"
+  ],
+  "gunModel": "Quaternius Ultimate Guns Pack AssaultRifle2_1.fbx (CC0 1.0), 0.92 m, restyled materials + edge bevel",
+  "renderer": "Eevee, 16 samples, Standard view transform, transparent film, pixel filter 1.0, anisotropic texture filter 16x; rendered at 2x the HD canvas (1280 px) and reduced by 2 (supersample.py: premultiplied Lanczos for colour/albedo, premultiplied box for mask, shadow and data layers)",
+  "supersample": 2,
+  "quality": "hd",
+  "camera": {
+    "projection": "orthographic",
+    "elevationDegrees": 42.0,
+    "lookingNorth": true,
+    "hdPixelsPerMeter": 160.0,
+    "sdPixelsPerMeter": 40.0,
+    "canvasHd": 640,
+    "scaleVersusE12e": 2.5,
+    "scaleChoice": "2.5x 64 px/m (user 2026-11-09); the native Goliath (unit 3 base image 234 + turret image 235, HD frame 16 south) is 227 HD px tall, matched at about 159 px/m"
+  },
+  "light": {
+    "key": "sun from the screen upper left (azimuth 135 deg = world -X,+Y), elevation 50 deg",
+    "rim": "sun from behind on the upper left (azimuth 115 deg, elevation 28 deg), energy 2.6 (key 3.2)",
+    "shadowProjection": "planar onto the ground along azimuth 135 deg, elevation 70 deg"
+  },
+  "scale": {
+    "hdFactor": 4,
+    "sd": "HD downscaled by 4 with a premultiplied box filter",
+    "standingHeightPx": {
+      "hd": 230,
+      "sd": 58
+    }
+  },
+  "directions": {
+    "count": 17,
+    "stepDegrees": 11.25,
+    "index0": "north (up)",
+    "index8": "east (right)",
+    "index16": "south (down)",
+    "clockwise": true,
+    "mirrored": "facings 17..31 = horizontal flip of facings 15..1; frames are symmetric about the pivot x"
+  },
+  "files": {
+    "color": "{res}/{animation}/d{direction:02}_f{frame:02}.png (RGBA, straight alpha)",
+    "mask": "{res}/{animation}/d{direction:02}_f{frame:02}_mask.png (L, 255 = team colour)",
+    "shadow": "{res}/{animation}/d{direction:02}_f{frame:02}_shadow.png (RGBA black, soft alpha, max 50%)",
+    "pivotNote": "pivot = ground point under the feet, as the pixel-corner offset from the top-left; colour, mask and shadow share frame size and pivot",
+    "layers": {
+      "bright": "hd/{animation}/d{direction:02}_f{frame:02}_bright.png",
+      "normal": "hd/{animation}/d{direction:02}_f{frame:02}_normal.png",
+      "specular": "hd/{animation}/d{direction:02}_f{frame:02}_specular.png",
+      "ao_depth": "hd/{animation}/d{direction:02}_f{frame:02}_ao_depth.png",
+      "emissive": "hd/{animation}/d{direction:02}_f{frame:02}_emissive.png (only frames in emissiveFrames; other frames = transparent black)",
+      "note": "HD only, same frame size and pivot as the colour frame; 'diffuse' = the existing colour frame, 'teamcolor' = the existing _mask frame. SD stays diffuse + mask (the SD path has no lighting)."
+    }
+  },
+  "teamColor": "masked objects: blue sleeves (shirts_sode, shirts_sode_BK), headband (hairband), hair accessories (hair_accce); original colours kept in the colour image",
+  "animations": {
+    "idle": {
+      "clip": "WAIT00",
+      "clipFrames": [
+        10,
+        30,
+        50,
+        70
+      ],
+      "loop": true,
+      "playOrder": [
+        0,
+        1,
+        2,
+        3,
+        2,
+        1
+      ],
+      "durationMs": [
+        250,
+        250,
+        250,
+        250
+      ],
+      "gun": "low-ready (IK hands on the gun)",
+      "frameCount": 4,
+      "frameSize": {
+        "hd": [
+          296,
+          316
+        ],
+        "sd": [
+          74,
+          79
+        ]
+      },
+      "pivot": {
+        "hd": [
+          148,
+          212
+        ],
+        "sd": [
+          37,
+          53
+        ]
+      },
+      "layers": {
+        "hd": [
+          "diffuse",
+          "bright",
+          "teamcolor",
+          "normal",
+          "specular",
+          "ao_depth"
+        ],
+        "sd": [
+          "diffuse",
+          "teamcolor"
+        ]
+      }
+    },
+    "walk": {
+      "clip": "WALK00_F",
+      "clipFrames": [
+        1,
+        5,
+        10,
+        14,
+        19,
+        23,
+        28,
+        32,
+        37
+      ],
+      "loop": true,
+      "playOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "durationMs": [
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84,
+        84
+      ],
+      "gun": "low-ready (IK hands on the gun), legs from the clip, in place",
+      "frameCount": 9,
+      "frameSize": {
+        "hd": [
+          288,
+          308
+        ],
+        "sd": [
+          72,
+          77
+        ]
+      },
+      "pivot": {
+        "hd": [
+          144,
+          208
+        ],
+        "sd": [
+          36,
+          52
+        ]
+      },
+      "layers": {
+        "hd": [
+          "diffuse",
+          "bright",
+          "teamcolor",
+          "normal",
+          "specular",
+          "ao_depth"
+        ],
+        "sd": [
+          "diffuse",
+          "teamcolor"
+        ]
+      }
+    },
+    "attack": {
+      "clip": "WAIT00 frame 10 legs + authored arm IK pose",
+      "clipFrames": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "loop": false,
+      "playOrder": [
+        0,
+        1,
+        2,
+        3,
+        2,
+        3
+      ],
+      "frameNames": [
+        "raise",
+        "aim",
+        "aim+muzzleFlash",
+        "recoil"
+      ],
+      "durationMs": [
+        84,
+        42,
+        42,
+        84
+      ],
+      "gun": "raise 18 deg down, aim level, recoil 4 deg up and 3 cm back; frame 2 = frame 1 + muzzle flash",
+      "frameCount": 4,
+      "frameSize": {
+        "hd": [
+          400,
+          404
+        ],
+        "sd": [
+          100,
+          101
+        ]
+      },
+      "pivot": {
+        "hd": [
+          200,
+          268
+        ],
+        "sd": [
+          50,
+          67
+        ]
+      },
+      "layers": {
+        "hd": [
+          "diffuse",
+          "bright",
+          "teamcolor",
+          "normal",
+          "specular",
+          "ao_depth",
+          "emissive"
+        ],
+        "sd": [
+          "diffuse",
+          "teamcolor"
+        ]
+      },
+      "emissiveFrames": [
+        2
+      ],
+      "actionFrames": [
+        2
+      ]
+    },
+    "death": {
+      "clip": "DAMAGED01",
+      "clipFrames": [
+        1,
+        4,
+        7,
+        10,
+        13,
+        31,
+        34,
+        40
+      ],
+      "loop": false,
+      "playOrder": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "durationMs": [
+        84,
+        84,
+        84,
+        84,
+        84,
+        126,
+        126,
+        126
+      ],
+      "holdLastFrame": true,
+      "gun": "in the right hand for frames 0-4, lying on the ground from frame 5; collapse only, no blood or gore",
+      "note": "hips travel halved so the body stays centred on the unit position",
+      "frameCount": 8,
+      "frameSize": {
+        "hd": [
+          496,
+          388
+        ],
+        "sd": [
+          124,
+          97
+        ]
+      },
+      "pivot": {
+        "hd": [
+          248,
+          216
+        ],
+        "sd": [
+          62,
+          54
+        ]
+      },
+      "layers": {
+        "hd": [
+          "diffuse",
+          "bright",
+          "teamcolor",
+          "normal",
+          "specular",
+          "ao_depth"
+        ],
+        "sd": [
+          "diffuse",
+          "teamcolor"
+        ]
+      }
+    }
+  },
+  "bake": {
+    "renderedFrames": 425,
+    "blenderSeconds": 293.2,
+    "outputFiles": 2550,
+    "outputBytes": 23265998
+  },
+  "lightingLayers": {
+    "source": "scr-render HdImageLoader (layer selection), HdSceneRenderer (deferred sprite shader), HdLighting (resolve shader), scr-data AnimFile (layer table)",
+    "animLayerNames": [
+      "diffuse",
+      "bright",
+      "teamcolor",
+      "emissive",
+      "normal",
+      "specular",
+      "ao_depth"
+    ],
+    "litPathRule": "the lit pass draws 'bright' instead of 'diffuse' and uses the frame's lighting only when bright, normal, specular and ao_depth all exist (and frame flag 8 is clear); otherwise it draws diffuse with flat default layers",
+    "shipAsDiffuse": "the existing colour frame (baked lighting) as 'diffuse' for the unlit path; the _bright frame (albedo, no baked lighting) as 'bright' for the lit path",
+    "bright": "RGBA, unlit base colour (albedo) as sRGB bytes like the colour frame, used as-is by the shader; alpha = the colour frame's alpha (the G-buffer coverage); muzzle flash pixels black",
+    "normal": "R = x, A = y (each n * 0.5 + 0.5); the shader reads only R and A and rebuilds z = sqrt(max(1 - x^2 - y^2, 0.1)); +x = screen right, +y = screen up, +z = towards the viewer; mirrored facings: the renderer negates x. G = y and B = z are copies for viewing (the converter clears them: native frames keep G and B black). E12l: the baked normal's tilt is blended with the viewer direction by normalStrength (soft, native-like lambert). Outside the silhouette (128,128,255,128) = the renderer's flat default",
+    "specular": "RGB = specular colour added as pow(dot(N, H), 16) * rgb (Blinn-Phong, times AO); grey (0.08 + 0.85 * metallic) * (1 - roughness) * 1.2: rifle metal 0.43-0.57, polymer 0.04, skin/cloth 0.014, hair 0.04, eyes 0.08; E12l: at least specularFloor (41, the native Marine's lowest byte); A = 255 (unused); outside (0,0,0,255) = default",
+    "ao_depth": "G = ambient occlusion (multiplies the lit colour), A = depth: fragment z = A * 75 * lightingScale HD pixels for point lights (lights sit at z 125); baked as 0.06 + how far the surface stands out towards the viewer from the unit's ground point (world -Y) in HD pixels / 75 (160 px/m), clamped to 0..1, then (E12l) 0.06 + (value - 0.06) * depthFactor (native Goliath range); calibrated against the native Marine (main_239.anim ao_depth alpha about 0.1 at the feet, 0.2 on the torso); R and B unused (AO copied); outside (255,255,255,0) = default",
+    "emissive": "RGB added after lighting and written to the bloom input (pixels over luminance 1.8 bloom); only the muzzle flash (1.0, 0.75, 0.3) in emissiveFrames; A = 255 where lit, unused",
+    "normalStrength": 0.5,
+    "specularFloor": 41,
+    "depthFactor": 0.4,
+    "aoMethod": "Eevee Ambient Occlusion shader node, distance 0.30 m",
+    "resolution": "every layer at the HD frame size (renderer samples all layers with the diffuse texture coordinates, so a layer texture only needs the same atlas layout)",
+    "renderedFrames": 425,
+    "blenderSeconds": 300.0,
+    "outputFiles": 1717,
+    "outputBytes": 41796104,
+    "checks": {
+      "colorCropMismatches": 0,
+      "brightPixelsFilledFromColor": 459975
+    }
+  },
+  "portrait": {
+    "source": "scr-client PortraitPlayer/PortraitTables/PortraitStatic, scr-data PortraitTypeTable; native TMarine clips probed read-only",
+    "nativeLayout": "clip path = <set prefix><portdata.tbl directory string><n>.webm; set prefix SD/portrait/, HD2/portrait/, portrait/ (HD skins: <skin>/portrait/); idle clips n = 0..3 chosen with the portdata.dat idle weights (native 85/5/5/5 %), talking clips n = 0..2 at random (no direct repeat); missing numbers fall back to lower ones; the clip is stretched into the 60x56 portrait control",
+    "nativeFormat": "WebM, VP9 profile 1, gbrp (RGB 4:4:4), 10 fps, opaque (no alpha); SD 60x56, HD2 224x240, HD 448x480; Marine clips 10 frames (Fid03 15/16)",
+    "suggestedDirectories": {
+      "idle": "unitychan\\UChFid0",
+      "talking": "unitychan\\UChTlk0",
+      "idleWeights": [
+        85,
+        5,
+        5,
+        5
+      ]
+    },
+    "addedUnitNote": "an added unit can name its own portrait: a portdata.dat entry (idle and talking directory string ids + 4 idle weights) whose strings point to these clips in the mod's files; today SC:R Crossover reuses the Medic portrait",
+    "fps": 10,
+    "sizes": {
+      "hd": [
+        448,
+        480
+      ],
+      "hd2": [
+        224,
+        240
+      ],
+      "sd": [
+        60,
+        56
+      ]
+    },
+    "clips": {
+      "Fid00": {
+        "frames": 10,
+        "kind": "idle",
+        "content": "breathing nod, one blink (the common idle clip)"
+      },
+      "Fid01": {
+        "frames": 10,
+        "kind": "idle",
+        "content": "glance to her left and back, blink"
+      },
+      "Fid02": {
+        "frames": 10,
+        "kind": "idle",
+        "content": "small smile and head tilt"
+      },
+      "Fid03": {
+        "frames": 15,
+        "kind": "idle",
+        "content": "tilt to the other side, double blink"
+      },
+      "Tlk00": {
+        "frames": 10,
+        "kind": "talking",
+        "content": "talking: mouth A/I/O/E/U blend shapes, closed frames between"
+      },
+      "Tlk01": {
+        "frames": 10,
+        "kind": "talking",
+        "content": "talking, one blink"
+      },
+      "Tlk02": {
+        "frames": 10,
+        "kind": "talking",
+        "content": "talking"
+      }
+    },
+    "files": {
+      "frames": "portrait/{set}/{clip}_f{frame:02}.png (RGB, opaque)",
+      "clips": "portrait/{set}/{clip}.webm (VP9 yuv420p from Blender's FFmpeg, 10 fps; re-encode to the native gbrp profile 1 from the PNG frames if needed)"
+    },
+    "render": "Eevee 32 samples, perspective head-and-shoulders camera on her left (she looks towards the screen left), warm key from the upper left, blue rim from the right back, dark warm-to-navy backdrop; pose WAIT00 frame 10, neck/head rotated per frame, facial blend shapes (EYE_DEF_C blink, MTH_A/I/U/E/O, MTH/EYE/BLW_SMILE1); HD rendered at 448x480, HD2 = HD Lanczos /2, SD rendered at 480x448 (own framing for the wider SD aspect) and Lanczos-reduced to 60x56",
+    "expressions": "neutral and friendly only (soft smile); no other expression shapes used"
+  },
+  "wireframe": {
+    "source": "scr-client ConsoleView.drawWireframe/drawUnitBox and Wireframe (cell entries), scr-render InterfaceAssets (twire.pcx colours); native sheets probed read-only",
+    "nativeLayout": "one .dds.grp frame per unit type: a horizontal strip of square cells, cell size = frame height; each drawn cell is a white mask tinted with its twire.pcx colour and drawn over the same box; cells 0..3 = damage parts (entry from the unit's hit points and randomizer), 4..5 = shield outlines (SD: drawn black when the unit has no shields; HD: skipped), the drawing uses min(6, cells) cells",
+    "nativeSizes": "SD wirefram 384x64 (6 cells of 64, DXT1, 1-bit white), SD grpwire/tranwire 192x32 (6 cells of 32); HD2 wirefram 1024x128 and HD 2048x256 (8 cells: 4 parts, 2 shield outlines, the whole picture, one empty; DXT5 soft white lines); HD/HD2 group and transport views draw the main HD strip into the 32x32 box (HD grpwire/tranwire are single cropped pictures, not read by the current drawing)",
+    "views": {
+      "single": "64x64 interface units",
+      "group": "32x32",
+      "transport": "32x32 (64 for large cargo)"
+    },
+    "parts": {
+      "0": "head and hair",
+      "1": "torso and arms",
+      "2": "hips, skirt and legs",
+      "3": "rifle"
+    },
+    "partMethod": "vertex part = part of its strongest bone (Head/Neck/Hair/Ribbon -> 0, Hips/legs/skirt -> 2, other bones -> 1, rifle -> 3); lines = silhouette, part borders, creases over 52 deg and depth steps over 4.8 cm on the 1024 px render, put on the nearer pixel's part",
+    "pose": "WAIT00 frame 10 with the rifle at low-ready, facing index 19 (towards the screen left), orthographic, 12 deg down",
+    "files": {
+      "hd": "wireframe/hd/wirefram.png (2048x256, 8 cells)",
+      "hd2": "wireframe/hd2/wirefram.png (1024x128, 8 cells)",
+      "sd": "wireframe/sd/wirefram.png (384x64), wireframe/sd/grpwire.png and tranwire.png (192x32)",
+      "hdGroup": "wireframe/{hd,hd2}/grpwire.png and tranwire.png (cropped whole picture)"
+    },
+    "shieldColors": {
+      "cell4": [
+        38,
+        61,
+        101,
+        183
+      ],
+      "cell5": [
+        13,
+        21,
+        38,
+        186
+      ]
+    },
+    "groupFrames": {
+      "hd": {
+        "size": [
+          62,
+          118
+        ],
+        "offset": [
+          34,
+          6
+        ]
+      },
+      "hd2": {
+        "size": [
+          32,
+          60
+        ],
+        "offset": [
+          16,
+          2
+        ]
+      }
+    },
+    "linePixelsHd": [
+      2629,
+      989,
+      1674,
+      1022
+    ]
+  },
+  "commandIcon": {
+    "source": "scr-client ConsoleView.drawCommandIconShifted, scr-render InterfaceAssets; native cmdicons probed",
+    "nativeFormat": "unit/cmdicons/cmdicons.dds.grp, one frame per icon: SD 32x32, HD2 64x64, HD 128x128, DXT1 (1-bit alpha), grey (the state tint is applied when drawn); SD centring uses the classic cmdicons.grp frame width/height (give visibleSize)",
+    "render": "attack aim pose, facing index 21, orthographic 22 deg down, Eevee; grey = luminance with levels matched to the native Marine/Ghost icons (HD 5/50/95 % = 6/50/215, SD 8/41/120); alpha >= 128 -> opaque",
+    "files": {
+      "hd": "icon/hd/cmdicon.png",
+      "hd2": "icon/hd2/cmdicon.png",
+      "sd": "icon/sd/cmdicon.png"
+    },
+    "sizes": {
+      "hd": {
+        "size": [
+          128,
+          128
+        ],
+        "visibleBox": [
+          0,
+          3,
+          116,
+          128
+        ],
+        "visibleSize": [
+          116,
+          125
+        ]
+      },
+      "hd2": {
+        "size": [
+          64,
+          64
+        ],
+        "visibleBox": [
+          0,
+          2,
+          58,
+          64
+        ],
+        "visibleSize": [
+          58,
+          62
+        ]
+      },
+      "sd": {
+        "size": [
+          32,
+          32
+        ],
+        "visibleBox": [
+          2,
+          2,
+          29,
+          32
+        ],
+        "visibleSize": [
+          27,
+          30
+        ]
+      }
+    }
+  },
+  "formatChanges0.2": "E12h: ao_depth depth calibrated to the native Marine, new parts portrait, wireframe, commandIcon; E12i: 160 px/m (canvasHd 640), 2x supersampled renders, rim light (values only, same structure)",
+  "uiArt": {
+    "reports": {
+      "portrait": {
+        "frames": 75,
+        "seconds": 23.0,
+        "blender": "5.2.3 LTS"
+      },
+      "wire": {
+        "frames": 4,
+        "blender": "5.2.3 LTS",
+        "seconds": 1.6
+      },
+      "icon": {
+        "frames": 1,
+        "blender": "5.2.3 LTS",
+        "seconds": 1.2
+      },
+      "encode": {
+        "clips": 21,
+        "blender": "5.2.3 LTS",
+        "seconds": 8.6
+      }
+    },
+    "outputFiles": 258,
+    "outputBytes": 25566824
+  },
+  "formatChanges0.3": "'quality' names the quality of the baked frames (folder and frameSize/pivot key: hd or hd2); attack frames that hit are listed in 'actionFrames' (before: the emissive frames)"
+}

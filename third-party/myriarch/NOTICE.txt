@@ -1,0 +1,10 @@
+Myriarch art: DRAGO by OSCAR CREATIVO, CC BY 4.0
+
+This work is based on "DRAGO 3D MODEL FREE BY Oscar Creativo"
+(https://sketchfab.com/3d-models/drago-3d-model-free-by-oscar-creativo-4173249254954513bfa1e5785fb40dd5) by OSCAR CREATIVO
+(https://sketchfab.com/oscar_creativo) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+
+License:  Creative Commons Attribution 4.0 International (CC BY 4.0). The full licence text is in license/CC-BY-4.0.txt.
+
+Changes: re-posed, animated and rendered as sprite frames by Fog of War Labs. The fire breath is not part of the model. Only
+rendered images are included, no model, texture or animation file. The author does not endorse this work.

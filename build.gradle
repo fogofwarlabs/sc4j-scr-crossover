@@ -1,0 +1,252 @@
+import org.gradle.api.artifacts.component.ModuleComponentIdentifier
+
+plugins {
+    id 'org.fogofwarlabs.sc4j.mod'
+    id 'org.fogofwarlabs.sc4j.scr.java'
+}
+
+// SC:R Crossover: a clone of the SC:R mod with its own mod identity, built the way the modder guide describes. The repository holds no
+// copy of the SC:R mod's sources: cloneScrMod copies the main sources and resources of every SC:R mod module into build/clone (one folder per
+// module, as a modder's copy has them) and copies the overlay (overlay/, the same folder layout) over them, after checking against
+// overlay.lock that no SC:R mod file under an overlay file changed; the source set "mod" compiles that clone with the crossover's own classes
+// and resources (src/mod), and jar packages it as scr-crossover.jar. Like scr.jar, the jar holds no StarCraft: Remastered asset or data file: the mod
+// reads them from the user's installation. The main source set stays empty; the tests (src/test) use the built jars only and the real SC:R mod
+// modules. The added units' graphics come from the baked frames of the art sets in third-party/<set> (each with its own licence, see its NOTICE.txt):
+// Unity-chan (Unity-chan License 3.0) and the giant monster Myriarch (CC BY 4.0). convertArt turns every set's frames, portrait clips,
+// wireframe strips and command icon into the unit's frame files and interface art at build time, and jar packs those with each set's
+// NOTICE and license files.
+
+// The SC:R build's folder (the submodule scr, which settings.gradle includes), and its module folders and their compiler arguments
+// (mod.properties there).
+def scrFolder = file('scr')
+def scrModProperties = new File(scrFolder, 'mod.properties')
+def scrProperties = new Properties()
+scrModProperties.withReader('UTF-8') { reader -> scrProperties.load(reader) }
+def scrModuleNames = scrProperties.getProperty('modules').split(',').toList()
+def scrCompilerArgs = scrProperties.getProperty('compilerArgs').split(' ').toList()
+// The engine modules of the engine version that the SC:R build names, and the projects of the SC:R build.
+def scrBuildProperties = new Properties()
+new File(scrFolder, 'gradle.properties').withReader('UTF-8') { reader -> scrBuildProperties.load(reader) }
+def engineModule = { String name -> 'org.fogofwarlabs.sc4j:' + name + ':' + scrBuildProperties.getProperty('sc4jVersion') }
+def scrModule = { String name -> 'org.fogofwarlabs.sc4j:' + name }
+def overlay = file('overlay')
+def overlayLock = file('overlay.lock')
+def overlayBase = file('overlay-base')
+def cloneRoot = layout.buildDirectory.dir('clone')
+def artSets = file('third-party')
+def convertedArt = layout.buildDirectory.dir('converted-art')
+
+sourceSets {
+    // The clone tool (src/clone/java): ScrModClone, the overlay and its lock (CloneOverlay). It runs at build time only.
+    clone {
+        java {
+            srcDir 'src/clone/java'
+        }
+    }
+    // The clone of the SC:R mod with the overlay: the sources and resources of every module folder under build/clone, and the crossover's own
+    // classes and resources (src/mod, package org.fogofwarlabs.sc4j.scrcrossover, and the service file that names its content extension).
+    mod {
+        java {
+            srcDirs = [file('src/mod/java')] + scrModuleNames.collect { name -> cloneRoot.map { directory -> directory.dir(name + '/src/main/java') } }
+        }
+        resources {
+            srcDirs = [file('src/mod/resources')] + scrModuleNames.collect { name -> cloneRoot.map { directory -> directory.dir(name + '/src/main/resources') } }
+        }
+    }
+    // The art converter (src/convert/java): ArtConverter turns the baked frames into the added units' graphics. It runs at build time only and
+    // uses the clone's own image writers and the crossover's art file layout (ScrCrossoverArtFiles), so it compiles against the clone.
+    convert {
+        java {
+            srcDir 'src/convert/java'
+        }
+        compileClasspath += mod.output + mod.compileClasspath
+        runtimeClasspath += mod.output + mod.runtimeClasspath
+    }
+}
+
+sc4jMod {
+    id = 'scr-crossover'
+    sourceSets = [project.sourceSets.mod]
+}
+
+// The third-party libraries of the SC:R mod modules (LWJGL, FFmpeg/JavaCPP, ...), resolved from the modules themselves so that the clone
+// compiles against what the SC:R mod uses. The engine modules come from the mod plugin and the dependencies below.
+def scrModuleDependencies = configurations.dependencyScope('scrModules')
+def scrModuleClasspath = configurations.resolvable('scrModuleClasspath') {
+    extendsFrom scrModuleDependencies.get()
+    attributes {
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.LIBRARY))
+        attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
+    }
+}
+def scrLibraries = files(scrModuleClasspath.map { configuration ->
+    configuration.incoming.artifactView {
+        componentFilter { component -> component instanceof ModuleComponentIdentifier && component.group != 'org.fogofwarlabs.sc4j' }
+    }.files
+})
+
+// scr.jar of the SC:R mod and the scr-game test resources folder, as the variants of their projects.
+def resolvableVariant = { String name, String usage ->
+    def scope = configurations.dependencyScope(name)
+    return configurations.resolvable(name + 'Files') {
+        extendsFrom scope.get()
+        attributes.attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, usage))
+    }
+}
+def scrModJarFiles = resolvableVariant('scrModJar', 'sc4j-mod-jar')
+def scrGameTestResourceFiles = resolvableVariant('scrGameTestResources', 'sc4j-test-resources')
+
+// The LWJGL native libraries of the GPU sample check, staged for the tests.
+def testNativeDependencies = configurations.dependencyScope('testNativeLibraries')
+def testNativeLibraryFiles = configurations.resolvable('testNativeLibraryFiles') {
+    extendsFrom testNativeDependencies.get()
+}
+def testNativeDirectory = layout.buildDirectory.dir('native-libraries')
+def stageTestNativeLibraries = tasks.register('stageTestNativeLibraries', Sync) {
+    description = 'Stages the LWJGL native libraries of the tests outside the Java runtime classpath.'
+    from({ testNativeLibraryFiles.get().collect { archive -> zipTree(archive) } }) {
+        include '**/*.dll', '**/*.so', '**/*.so.*'
+        exclude 'META-INF/**', '**/*.sha1', '**/*.git'
+        eachFile { details -> details.path = details.name }
+        includeEmptyDirs = false
+    }
+    into testNativeDirectory
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+}
+
+dependencies {
+    cloneImplementation engineModule('sc4j-base')
+
+    // The mod API and the base: at run time the runtime provides them, scr-crossover.jar does not hold them (like scr.jar).
+    modImplementation engineModule('sc4j-base')
+    modImplementation scrLibraries
+
+    testImplementation sourceSets.clone.output
+    testImplementation engineModule('sc4j-runtime')
+    // The SC:R mod itself (its entry and its Beacon.Link provider) hosts the room the clone must not join.
+    testImplementation scrModule('scr-client')
+    testImplementation scrModule('scr-net')
+    // The in-memory LAN scenario (InMemoryLanScenario) of the scr-net test fixtures, which the clone's LAN morph test plays over.
+    testImplementation testFixtures(scrModule('scr-net'))
+    // The GPU sample check of the added unit draws through the SC:R renderers and LWJGL (as the clone's classes, see CloneRenderScenario).
+    testImplementation scrModule('scr-render')
+    testImplementation scrLibraries
+    testImplementation testFixtures(scrModule('scr-data'))
+    // The game tests' fixtures and replays: the value test creates a replay's game with each mod.
+    testImplementation testFixtures(scrModule('scr-game'))
+    scrGameTestResources scrModule('scr-game')
+    testRuntimeOnly files(scrGameTestResourceFiles)
+    testImplementation testFixtures(engineModule('sc4j-beaconlink'))
+    // The installation records that the install test lays out.
+    testImplementation testFixtures(engineModule('sc4j-mod-manifest'))
+
+    scrModuleNames.each { name -> scrModules scrModule(name) }
+    scrModJar scrModule('scr')
+    testNativeLibraries "org.lwjgl:lwjgl:$LWJGL_VERSION:$LWJGL_NATIVES"
+    testNativeLibraries "org.lwjgl:lwjgl-glfw:$LWJGL_VERSION:$LWJGL_NATIVES"
+    testNativeLibraries "org.lwjgl:lwjgl-opengl:$LWJGL_VERSION:$LWJGL_NATIVES"
+    testNativeLibraries "org.lwjgl:lwjgl-stb:$LWJGL_VERSION:$LWJGL_NATIVES"
+}
+
+// The clone tool's tasks. A failure of the tool (a changed SC:R mod file under an overlay file, an overlay file the lock does not record)
+// is one plain line, which becomes the build's failure message.
+def configureCloneTool = { JavaExec task, String mode ->
+    def errors = new ByteArrayOutputStream()
+    task.group = 'build'
+    task.classpath = sourceSets.clone.runtimeClasspath
+    task.mainClass = 'org.fogofwarlabs.sc4j.scrcrossover.clone.ScrModClone'
+    task.errorOutput = errors
+    task.ignoreExitValue = true
+    task.argumentProviders.add({
+        [mode, scrFolder.absolutePath, overlay.absolutePath, overlayLock.absolutePath, overlayBase.absolutePath, ':']
+    } as CommandLineArgumentProvider)
+    task.doFirst {
+        errors.reset()
+    }
+    task.doLast {
+        if (task.executionResult.get().exitValue != 0) {
+            def message = errors.toString('UTF-8').trim()
+            throw new GradleException(message.isEmpty() ? 'The clone tool failed with the exit value ' + task.executionResult.get().exitValue + '.' : message)
+        }
+    }
+}
+
+def cloneScrMod = tasks.register('cloneScrMod', JavaExec) { task ->
+    description = 'Clones the main sources of the SC:R mod into build/clone and copies the overlay of SC:R Crossover over them.'
+    configureCloneTool(task, 'clone')
+    scrModuleNames.each { name -> inputs.dir(new File(scrFolder, name + '/src/main')).withPropertyName('scrSources-' + name) }
+    inputs.files(scrModProperties).withPropertyName('scrModProperties')
+    inputs.dir(overlay).withPropertyName('overlay')
+    inputs.files(overlayLock).withPropertyName('overlayLock')
+    outputs.dir(cloneRoot)
+    argumentProviders.add({
+        [cloneRoot.get().asFile.absolutePath] + scrModuleNames
+    } as CommandLineArgumentProvider)
+    doFirst {
+        project.delete(cloneRoot)
+    }
+}
+
+tasks.register('overlayDiff', JavaExec) { task ->
+    description = "Shows, for each overlay file whose SC:R mod file changed, the SC:R mod's change and the overlay's change."
+    configureCloneTool(task, 'diff')
+}
+
+tasks.register('acceptOverlay', JavaExec) { task ->
+    description = 'Records the SC:R mod file of each overlay file in overlay.lock and overlay-base, after a change was merged by hand.'
+    configureCloneTool(task, 'accept')
+}
+
+// The clone compiles with the SC:R mod's compiler arguments, so that the classes of the unchanged SC:R sources equal those of scr.jar.
+tasks.named('compileModJava') {
+    dependsOn cloneScrMod
+    options.compilerArgs += scrCompilerArgs
+}
+
+def convertArt = tasks.register('convertArt', JavaExec) {
+    description = 'Converts the baked frames of every art set into the graphics of the added units of SC:R Crossover.'
+    group = 'build'
+    classpath = sourceSets.convert.runtimeClasspath
+    mainClass = 'org.fogofwarlabs.sc4j.scrcrossover.convert.ArtConverter'
+    inputs.dir(artSets).withPropertyName('artSets')
+    outputs.dir(convertedArt)
+    maxHeapSize = '6g'
+    argumentProviders.add({
+        [artSets.absolutePath, convertedArt.get().asFile.absolutePath]
+    } as CommandLineArgumentProvider)
+    doFirst {
+        project.delete(convertedArt)
+    }
+}
+
+tasks.named('processModResources') {
+    dependsOn cloneScrMod
+}
+
+// The mod jar scr-crossover.jar: the clone's classes and resources (sc4j-mod.json of the overlay and meta/ of the scr-client folder), the added
+// units' converted graphics and the NOTICE and license files of every art set (third-party/<set>/); the baked frames themselves stay out.
+def modJar = tasks.named('jar') {
+    from(convertArt)
+    from(artSets) {
+        include '*/NOTICE.txt', '*/license/**'
+        into 'third-party'
+    }
+}
+
+// The tests read scr-crossover.jar and scr.jar as a user's mods/ folder has them.
+tasks.withType(Test).configureEach {
+    dependsOn modJar
+    inputs.files(scrModJarFiles).withPropertyName('scrModJar')
+    systemProperty 'sc4j.scrcrossover.jar', modJar.get().archiveFile.get().asFile.absolutePath
+    jvmArgumentProviders.add({ ['-Dsc4j.scr.jar=' + scrModJarFiles.get().singleFile.absolutePath] } as CommandLineArgumentProvider)
+    systemProperty 'sc4j.scrcrossover.overlay', overlay.absolutePath
+    systemProperty 'sc4j.scrcrossover.art', artSets.absolutePath
+    // The GPU sample check of the added unit's graphics (integration tier) runs only with this property, as the SC:R render tests do.
+    systemProperty 'sc4j.render.smoke', providers.gradleProperty('sc4j.render.smoke').getOrElse('false')
+    dependsOn stageTestNativeLibraries
+    systemProperty 'org.lwjgl.librarypath', testNativeDirectory.get().asFile.absolutePath
+    systemProperty 'org.lwjgl.system.SharedLibraryExtractPath', layout.buildDirectory.dir('tmp/native-extract').get().asFile.absolutePath
+    jvmArgs '--enable-native-access=ALL-UNNAMED'
+    maxHeapSize = '4g'
+}

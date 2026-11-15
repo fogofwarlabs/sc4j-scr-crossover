@@ -1,0 +1,50 @@
+{
+  "format": 1,
+  "id": "scr-crossover",
+  "name": {"en": "SC:R Crossover", "ko": "SC:R Crossover"},
+  "version": "0.1.0",
+  "engine": "0.1",
+  "entry": "org.fogofwarlabs.sc4j.scr.ScrMod",
+  "description": {
+    "en": "SC:R mod clone with the added unit Unity-chan. Requires StarCraft: Remastered. Unity-chan: © Unity Technologies Japan/UCL (Unity-chan License 3.0).",
+    "ko": "유니티짱 유닛을 추가한 SC:R 모드 복제본. 스타크래프트: 리마스터 설치 필요. 유니티짱: © Unity Technologies Japan/UCL (유니티짱 라이선스 3.0)."
+  },
+  "authors": ["Fog of War Labs"],
+  "license": "Unity-chan: © Unity Technologies Japan/UCL, Unity-chan License 3.0. Rifle: Quaternius, CC0 1.0. Myriarch: DRAGO by OSCAR CREATIVO, CC BY 4.0.",
+  "notices": [
+    {
+      "en": "SC4J is not affiliated with or endorsed by Blizzard Entertainment. StarCraft is a trademark of Blizzard Entertainment, Inc.",
+      "ko": "SC4J는 Blizzard Entertainment와 제휴하거나 승인받지 않았습니다. StarCraft는 Blizzard Entertainment, Inc.의 상표입니다."
+    },
+    {"en": "The mod contains no Blizzard assets.", "ko": "모드에는 Blizzard 에셋이 없습니다."}
+  ],
+  "website": "https://github.com/fogofwarlabs/sc4j",
+  "images": {"icon": "meta/icon.png", "banner": "meta/banner.png"},
+  "settings": [
+    {
+      "key": "gameFolder",
+      "type": "directory",
+      "required": true,
+      "label": {"en": "StarCraft: Remastered folder", "ko": "스타크래프트: 리마스터 폴더"},
+      "description": {
+        "en": "StarCraft: Remastered 1.23.10 folder",
+        "ko": "스타크래프트: 리마스터 1.23.10 폴더"
+      },
+      "check": {"contains": [".build.info", "x86_64/StarCraft.exe"]},
+      "message": {
+        "en": "Not a StarCraft: Remastered folder (no .build.info or x86_64/StarCraft.exe)",
+        "ko": "스타크래프트: 리마스터 폴더가 아님 (.build.info 또는 x86_64/StarCraft.exe 없음)"
+      },
+      "detect": {"uninstallEntries": ["StarCraft"], "programFolders": ["StarCraft"]},
+      "shared": "starcraft-remastered"
+    },
+    {
+      "key": "locale",
+      "type": "choice",
+      "options": ["enUS", "deDE", "esES", "esMX", "frFR", "itIT", "jaJP", "koKR", "plPL", "ptBR", "ruRU", "zhCN", "zhTW"],
+      "default": "enUS",
+      "systemDefault": true,
+      "label": {"en": "Text language", "ko": "텍스트 언어"}
+    }
+  ]
+}

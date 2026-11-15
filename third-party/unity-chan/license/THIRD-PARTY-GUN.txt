@@ -1,0 +1,9 @@
+Third-party model used for the rifle in the Unity-chan frames
+
+Model:    AssaultRifle2_1
+Pack:     Ultimate Guns Pack, LowPoly Models by Quaternius
+Source:   https://quaternius.com
+License:  CC0 1.0 Universal (Public Domain Dedication), https://creativecommons.org/publicdomain/zero/1.0/
+          The pack's License.txt is copied unchanged as CC0-License-Quaternius.txt.
+
+Only rendered images are included, not the model file.

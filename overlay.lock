@@ -1,0 +1,4 @@
+# The SC:R mod files the overlay files are made from: the SHA-256 of each (line endings not counted), or "added" for a file
+# the SC:R mod does not have. The build stops when one of them changes; the acceptOverlay task records them again.
+ffbf82b2577d0ca53f78e7a713ad1638f8fca8d06fe1d613eaa79fc1b42a5ef9  scr-client/src/main/resources/sc4j-mod.json
+66e95b6ff0789b0ef364372ae6f656bcff2016d70a68c4a39c5ede148078fdd4  scr-net/src/main/resources/org/fogofwarlabs/sc4j/scr/net/lan/lan-lobby.properties

@@ -1,0 +1,47 @@
+SC4J SC:R Crossover
+Copyright 2026 Fog of War Labs (https://fogofwarlabs.org)
+
+This product is licensed under the Apache License, Version 2.0 (LICENSE).
+
+StarCraft is a trademark of Blizzard Entertainment, Inc. SC4J is not affiliated with or endorsed by Blizzard Entertainment.
+SC:R Crossover, a clone of the SC:R mod, reads the game data of a user-owned StarCraft: Remastered installation; its mod jar carries no such data.
+
+Third-party material
+====================
+
+SC:R Crossover and its mod jar carry the following third-party material. Each entry names its licence and where its full licence text lives.
+The mod jar carries LICENSE and NOTICE in META-INF/ and the NOTICE and license files of each art set under third-party/.
+
+Art and models
+--------------
+
+Unity-chan sprite frames (third-party/unity-chan, carried in the SC:R Crossover mod jar)
+  (c) Unity Technologies Japan/UCL. Unity-Chan License Terms 3.0 (Unity-chan License 3.0).
+  Licence texts: third-party/unity-chan/license/ (EN and JP terms, license indication, logos);
+  notice: third-party/unity-chan/NOTICE.txt.
+
+AssaultRifle2_1 of the Ultimate Guns Pack by Quaternius (quaternius.com), rendered into the Unity-chan frames
+  CC0 1.0 Universal (public domain dedication).
+  Licence text: third-party/unity-chan/license/CC0-License-Quaternius.txt and THIRD-PARTY-GUN.txt.
+
+Myriarch frames (third-party/myriarch, carried in the SC:R Crossover mod jar)
+  This work is based on "DRAGO 3D MODEL FREE BY Oscar Creativo"
+  (https://sketchfab.com/3d-models/drago-3d-model-free-by-oscar-creativo-4173249254954513bfa1e5785fb40dd5) by OSCAR CREATIVO
+  (https://sketchfab.com/oscar_creativo) licensed under CC-BY-4.0 (Creative Commons Attribution 4.0 International; the
+  link to the licence is in the notice).
+  Rendered and adapted (changes listed in the notice). Licence text: third-party/myriarch/license/CC-BY-4.0.txt;
+  notice: third-party/myriarch/NOTICE.txt.
+
+Fonts
+-----
+
+SC:R Crossover ships no third-party font: it uses the fonts of the user's own installation.
+
+Build and test tools (not in the mod jar)
+-----------------------------------------
+
+Gradle Wrapper (gradle/wrapper/gradle-wrapper.jar)
+  Apache License 2.0 (LICENSE of this repository holds the text).
+
+JUnit 5 (tests only)
+  Eclipse Public License 2.0.

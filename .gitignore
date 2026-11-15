@@ -1,0 +1,33 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore IntelliJ personal files
+*.iml
+*.ipr
+*.iws
+.idea/libraries
+.idea/misc.xml
+.idea/workspace.xml
+.idea/modules.xml
+.idea/artifacts/
+.idea/dictionaries/
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Ignore Build Directory
+build/
+
+# Ignore crash logs and caches of runs started from the repository
+hs_err_pid*.log
+replay_pid*.log
+__pycache__/
+/.cache/
+/.lwjgl/
+
+# Ignore game data: StarCraft: Remastered installations
+/StarCraft/
