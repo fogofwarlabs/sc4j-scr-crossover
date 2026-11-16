@@ -2,12 +2,7 @@ package org.fogofwarlabs.sc4j.scrcrossover;
 
 import org.fogofwarlabs.sc4j.engine.content.type.UnitType;
 import org.fogofwarlabs.sc4j.engine.content.type.WeaponType;
-import org.fogofwarlabs.sc4j.scr.content.ScrAddedUnitType;
-import org.fogofwarlabs.sc4j.scr.content.ScrAddedWeapon;
-import org.fogofwarlabs.sc4j.scr.content.ScrDamageKinds;
-import org.fogofwarlabs.sc4j.scr.content.ScrRequirementScript;
-import org.fogofwarlabs.sc4j.scr.content.ScrUnits;
-import org.fogofwarlabs.sc4j.scr.content.ScrWeapons;
+import org.fogofwarlabs.sc4j.scr.content.*;
 import org.fogofwarlabs.sc4j.scr.data.format.dat.DatTable;
 import org.fogofwarlabs.sc4j.scr.data.format.dat.UnitsDat;
 import org.fogofwarlabs.sc4j.scr.data.format.dat.WeaponsDat;

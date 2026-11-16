@@ -1,5 +1,3 @@
-import org.gradle.api.artifacts.component.ModuleComponentIdentifier
-
 plugins {
     id 'org.fogofwarlabs.sc4j.mod'
     id 'org.fogofwarlabs.sc4j.scr.java'
