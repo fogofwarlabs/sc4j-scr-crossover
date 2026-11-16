@@ -87,7 +87,7 @@ The jar carries each set's `NOTICE.txt` and `license/` under `third-party/<set>/
 
 ## Releases
 
-A pull request from `develop` into `main` sets `version=X.Y.Z` in `gradle.properties` and moves `scr` to a commit with a released `sc4jVersion`. The push to `main` creates the GitHub release `vX.Y.Z` with `scr-crossover.jar` and `scr-crossover.jar.sha256`.
+`develop` sets `version=X.Y.Z` in `gradle.properties` and moves `scr` to a commit with a released `sc4jVersion`; a pull request from `develop` into `main` titled ``Release version `X.Y.Z` `` is merged with a merge commit. The push to `main` creates the GitHub release `vX.Y.Z` with `scr-crossover.jar` and `scr-crossover.jar.sha256`.
 
 ## Licence
 

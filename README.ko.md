@@ -87,7 +87,7 @@ jar는 세트마다 `NOTICE.txt`와 `license/`를 `third-party/<set>/` 아래에
 
 ## 릴리스
 
-`develop`에서 `main`으로의 풀 리퀘스트가 `gradle.properties`에 `version=X.Y.Z`를 정하고 `scr`를 릴리스된 `sc4jVersion`의 커밋으로 옮깁니다. `main`에 푸시되면 `scr-crossover.jar`와 `scr-crossover.jar.sha256`이 붙은 GitHub 릴리스 `vX.Y.Z`가 만들어집니다.
+`develop`에서 `gradle.properties`에 `version=X.Y.Z`를 정하고 `scr`를 릴리스된 `sc4jVersion`의 커밋으로 옮긴 뒤, `develop`에서 `main`으로 ``Release version `X.Y.Z` `` 제목의 풀 리퀘스트를 열어 merge commit으로 병합합니다. `main`에 푸시되면 `scr-crossover.jar`와 `scr-crossover.jar.sha256`이 붙은 GitHub 릴리스 `vX.Y.Z`가 만들어집니다.
 
 ## 라이선스
 
