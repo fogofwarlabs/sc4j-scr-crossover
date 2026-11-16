@@ -23,7 +23,7 @@
 - [복제와 오버레이](#복제와-오버레이)
 - [빌드와 실행](#빌드와-실행)
 - [그림 라이선스](#그림-라이선스)
-- [릴리스](#릴리스)
+- [릴리즈](#릴리즈)
 - [라이선스](#라이선스)
 
 ## 구성
@@ -85,9 +85,9 @@ SC:R 모드를 갱신하려면 `git submodule update --remote scr`로 받고, �
 
 jar는 세트마다 `NOTICE.txt`와 `license/`를 `third-party/<set>/` 아래에 담고, 매니페스트의 `license` 줄이 이를 밝힙니다. 이 프레임이 든 jar를 공개할 때는 이를 유지합니다.
 
-## 릴리스
+## 릴리즈
 
-`develop`에서 `gradle.properties`에 `version=X.Y.Z`를 정하고 `scr`를 릴리스된 `sc4jVersion`의 커밋으로 옮긴 뒤, `develop`에서 `main`으로 ``Release version `X.Y.Z` `` 제목의 풀 리퀘스트를 열어 merge commit으로 병합합니다. `main`에 푸시되면 `scr-crossover.jar`와 `scr-crossover.jar.sha256`이 붙은 GitHub 릴리스 `vX.Y.Z`가 만들어집니다.
+`develop`에서 `gradle.properties`에 `version=X.Y.Z`를 정하고 `scr`를 릴리즈된 `sc4jVersion`의 커밋으로 옮긴 뒤, `develop`에서 `main`으로 ``Release version `X.Y.Z` `` 제목의 풀 리퀘스트를 열어 merge commit으로 병합합니다. `main`에 푸시되면 `scr-crossover.jar`와 `scr-crossover.jar.sha256`이 붙은 GitHub 릴리즈 `vX.Y.Z`가 만들어집니다.
 
 ## 라이선스
 
