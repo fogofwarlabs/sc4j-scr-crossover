@@ -5,6 +5,7 @@
     <option name="DO_NOT_FORMAT">
       <list>
         <fileSet type="globPattern" pattern="*.json" />
+        <fileSet type="globPattern" pattern="*.md" />
         <fileSet type="globPattern" pattern="*.svg" />
       </list>
     </option>
