@@ -1,0 +1,108 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+env:
+  MOD_ID: scr-crossover
+
+jobs:
+  release:
+    name: release
+    # The client module ships FFmpeg natives for windows-x86_64 only.
+    runs-on: windows-latest
+    timeout-minutes: 120
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Keep line endings
+        run: git config --global core.autocrlf false
+
+      - name: Check out
+        uses: actions/checkout@v7
+        with:
+          submodules: true
+
+      # The engine version comes from the SC:R build (the submodule scr).
+      - name: Read the versions
+        id: version
+        run: |
+          version=$(sed -n 's/^version=//p' gradle.properties | tr -d '\r')
+          engine=$(sed -n 's/^sc4jVersion=//p' scr/gradle.properties | tr -d '\r')
+          if [ -z "$version" ]; then
+            echo "::error::gradle.properties has no version line."
+            exit 1
+          fi
+          if [ -z "$engine" ]; then
+            echo "::error::scr/gradle.properties has no sc4jVersion line."
+            exit 1
+          fi
+          case "$version" in
+            *-SNAPSHOT)
+              echo "::error::main releases only a release version, not $version: set the version in gradle.properties without -SNAPSHOT."
+              exit 1 ;;
+          esac
+          case "$engine" in
+            *-SNAPSHOT)
+              echo "::error::A released mod builds against a released engine, not $engine: move the submodule scr to a commit whose sc4jVersion is an engine release."
+              exit 1 ;;
+          esac
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Refuse an existing tag
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" > /dev/null; then
+            echo "::error::The tag $TAG already exists: every release needs a new version in gradle.properties."
+            exit 1
+          fi
+
+      - name: Set up the JDK
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+
+      - name: Test
+        run: ./gradlew test -Psc4j.render.smoke=false
+
+      - name: Build the mod jar
+        # The checksum file has the sha256sum format: the hash, two spaces and the file name.
+        run: |
+          ./gradlew :jar
+          cd build/libs
+          hash=$(sha256sum "$MOD_ID.jar" | cut -d ' ' -f 1)
+          printf '%s  %s\n' "$hash" "$MOD_ID.jar" > "$MOD_ID.jar.sha256"
+
+      - name: Tag and create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: gh release create "$TAG" "build/libs/$MOD_ID.jar" "build/libs/$MOD_ID.jar.sha256" --target "$GITHUB_SHA" --title "$TAG" --generate-notes
+
+      - name: Upload the reports
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reports
+          path: |
+            **/build/reports/
+            **/build/test-results/
+          if-no-files-found: ignore
+          retention-days: 14
