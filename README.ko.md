@@ -1,6 +1,19 @@
-# SC:R Crossover
+<h1 align="center">
+  <img src="https://raw.githubusercontent.com/fogofwarlabs/sc4j-scr/main/docs/branding/icon.svg" alt="SC:R Crossover 로고" width="160">
+  <br>
+  SC:R Crossover
+</h1>
 
-[English](README.md) | **한국어**
+<p align="center">SC:R 모드를 복제해 값을 바꾸고 유닛 둘을 더한 별도 모드.</p>
+
+<p align="center">
+  <a href="https://github.com/fogofwarlabs/sc4j-scr-crossover/releases"><img src="https://img.shields.io/github/v/release/fogofwarlabs/sc4j-scr-crossover" alt="Release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="License: Apache-2.0"></a>
+</p>
+
+<p align="center"><a href="README.md">English</a> | <b>한국어</b></p>
+
+---
 
 [SC:R 모드](https://github.com/fogofwarlabs/sc4j-scr)를 별도 SC4J 모드로 복제한 것입니다(모드 id `scr-crossover`, jar `scr-crossover.jar`). 자체 LAN 참가 버전, 바꾼 Terran Marine 값, 추가 유닛 둘이 있습니다: Terran Unity-chan(Barracks)과 Zerg Myriarch(Hive 변태). 게임 데이터는 플레이어 본인의 스타크래프트: 리마스터 설치본에서 읽습니다.
 

@@ -1,6 +1,19 @@
-# SC:R Crossover
+<h1 align="center">
+  <img src="https://raw.githubusercontent.com/fogofwarlabs/sc4j-scr/main/docs/branding/icon.svg" alt="SC:R Crossover logo" width="160">
+  <br>
+  SC:R Crossover
+</h1>
 
-**English** | [한국어](README.ko.md)
+<p align="center">The SC:R mod cloned into a mod of its own, with changed values and two new units.</p>
+
+<p align="center">
+  <a href="https://github.com/fogofwarlabs/sc4j-scr-crossover/releases"><img src="https://img.shields.io/github/v/release/fogofwarlabs/sc4j-scr-crossover" alt="Release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="License: Apache-2.0"></a>
+</p>
+
+<p align="center"><b>English</b> | <a href="README.ko.md">한국어</a></p>
+
+---
 
 A clone of the [SC:R mod](https://github.com/fogofwarlabs/sc4j-scr) as its own SC4J mod (mod id `scr-crossover`, jar `scr-crossover.jar`): its own LAN join version, changed Terran Marine values, and two added units, the Terran Unity-chan (Barracks) and the Zerg Myriarch (a Hive morph). It reads the game data from the player's own StarCraft: Remastered installation.
 
