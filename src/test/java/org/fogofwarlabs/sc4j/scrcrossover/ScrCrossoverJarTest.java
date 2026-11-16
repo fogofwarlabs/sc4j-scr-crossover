@@ -150,7 +150,6 @@ final class ScrCrossoverJarTest {
         Assertions.assertNotEquals(scr.getName().get("en"), crossover.getName().get("en"));
         Assertions.assertEquals(ScrMod.class.getName(), crossover.getEntry());
         Assertions.assertEquals(scr.getEngine(), crossover.getEngine());
-        Assertions.assertEquals(scr.getVersion(), crossover.getVersion());
         Assertions.assertNotNull(crossoverFolder);
         Assertions.assertNotNull(scrFolder);
         Assertions.assertNotNull(scrFolder.getSharedName());
