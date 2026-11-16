@@ -103,7 +103,7 @@ The build also stops when an overlay file is not in the lock or the lock names a
   "name": {"en": "SC:R Crossover", "ko": "SC:R Crossover"},
 ```
 
-The mod id names the settings file (`userdata/settings/scr-crossover.json`), the storage folder (`userdata/mods/scr-crossover/`) and the log folder, and is the first part of the online mod identity (section 6). Pick an unused id (lower case letters, digits, hyphens). Keep `entry`, `engine`, `version` and `settings` of the SC:R mod. The `license` line and the end of each `description` carry the art notation ([below](#the-license-notation-in-overlayscr-clientsrcmainresourcessc4j-modjson)).
+The mod id names the settings file (`userdata/settings/scr-crossover.json`), the storage folder (`userdata/mods/scr-crossover/`) and the log folder, and is the first part of the online mod identity (section 6). Pick an unused id (lower case letters, digits, hyphens). Keep `entry` and `settings` of the SC:R mod; the mod plugin writes `version` and `engine`. The `license` line and the end of each `description` carry the art notation ([below](#the-license-notation-in-overlayscr-clientsrcmainresourcessc4j-modjson)).
 
 ### The LAN join version (`overlay/scr-net/src/main/resources/org/fogofwarlabs/sc4j/scr/net/lan/lan-lobby.properties`)
 

@@ -103,7 +103,7 @@ SC:R 모드가 이 파일 중 하나를 바꾸면 빌드가 멈춥니다.
   "name": {"en": "SC:R Crossover", "ko": "SC:R Crossover"},
 ```
 
-모드 id는 설정 파일(`userdata/settings/scr-crossover.json`), 저장 폴더(`userdata/mods/scr-crossover/`), 로그 폴더의 이름이 되며, 온라인 모드 정체성의 첫 부분입니다(6절). 다른 사람이 쓰지 않는 id를 고릅니다(소문자, 숫자, 하이픈). `entry`, `engine`, `version`, `settings`는 SC:R 모드의 것을 유지합니다. `license` 줄과 각 `description`의 끝에는 그림 표기가 들어갑니다([아래](#라이선스-표기-overlayscr-clientsrcmainresourcessc4j-modjson-안)).
+모드 id는 설정 파일(`userdata/settings/scr-crossover.json`), 저장 폴더(`userdata/mods/scr-crossover/`), 로그 폴더의 이름이 되며, 온라인 모드 정체성의 첫 부분입니다(6절). 다른 사람이 쓰지 않는 id를 고릅니다(소문자, 숫자, 하이픈). `entry`와 `settings`는 SC:R 모드의 것을 유지합니다. `version`과 `engine`은 모드 플러그인이 씁니다. `license` 줄과 각 `description`의 끝에는 그림 표기가 들어갑니다([아래](#라이선스-표기-overlayscr-clientsrcmainresourcessc4j-modjson-안)).
 
 ### LAN 참가 버전 (`overlay/scr-net/src/main/resources/org/fogofwarlabs/sc4j/scr/net/lan/lan-lobby.properties`)
 

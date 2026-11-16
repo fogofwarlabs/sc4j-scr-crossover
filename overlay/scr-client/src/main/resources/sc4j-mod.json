@@ -2,8 +2,6 @@
   "format": 1,
   "id": "scr-crossover",
   "name": {"en": "SC:R Crossover", "ko": "SC:R Crossover"},
-  "version": "0.1.0",
-  "engine": "0.1",
   "entry": "org.fogofwarlabs.sc4j.scr.ScrMod",
   "description": {
     "en": "SC:R mod clone with two added units. Requires StarCraft: Remastered. Unity-chan: © Unity Technologies Japan/UCL (Unity-chan License 3.0).",

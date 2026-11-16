@@ -2,8 +2,6 @@
   "format": 1,
   "id": "scr",
   "name": {"en": "StarCraft: Remastered", "ko": "스타크래프트: 리마스터"},
-  "version": "0.1.0",
-  "engine": "0.1",
   "entry": "org.fogofwarlabs.sc4j.scr.ScrMod",
   "description": {
     "en": "StarCraft: Remastered for SC4J. Requires StarCraft: Remastered.",
