@@ -6,8 +6,8 @@
   "engine": "0.1",
   "entry": "org.fogofwarlabs.sc4j.scr.ScrMod",
   "description": {
-    "en": "SC:R mod clone with the added unit Unity-chan. Requires StarCraft: Remastered. Unity-chan: © Unity Technologies Japan/UCL (Unity-chan License 3.0).",
-    "ko": "유니티짱 유닛을 추가한 SC:R 모드 복제본. 스타크래프트: 리마스터 설치 필요. 유니티짱: © Unity Technologies Japan/UCL (유니티짱 라이선스 3.0)."
+    "en": "SC:R mod clone with two added units. Requires StarCraft: Remastered. Unity-chan: © Unity Technologies Japan/UCL (Unity-chan License 3.0).",
+    "ko": "유닛 둘을 추가한 SC:R 모드 복제본. 스타크래프트: 리마스터 설치 필요. 유니티짱: © Unity Technologies Japan/UCL (유니티짱 라이선스 3.0)."
   },
   "authors": ["Fog of War Labs"],
   "license": "Unity-chan: © Unity Technologies Japan/UCL, Unity-chan License 3.0. Rifle: Quaternius, CC0 1.0. Myriarch: DRAGO by OSCAR CREATIVO, CC BY 4.0.",
@@ -27,8 +27,8 @@
       "required": true,
       "label": {"en": "StarCraft: Remastered folder", "ko": "스타크래프트: 리마스터 폴더"},
       "description": {
-        "en": "StarCraft: Remastered 1.23.10 folder",
-        "ko": "스타크래프트: 리마스터 1.23.10 폴더"
+        "en": "The folder where StarCraft: Remastered is installed",
+        "ko": "스타크래프트: 리마스터가 설치된 폴더"
       },
       "check": {"contains": [".build.info", "x86_64/StarCraft.exe"]},
       "message": {

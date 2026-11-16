@@ -6,8 +6,8 @@
   "engine": "0.1",
   "entry": "org.fogofwarlabs.sc4j.scr.ScrMod",
   "description": {
-    "en": "StarCraft: Remastered 1.23.10. Requires StarCraft: Remastered.",
-    "ko": "스타크래프트: 리마스터 1.23.10. 스타크래프트: 리마스터 설치 필요."
+    "en": "StarCraft: Remastered for SC4J. Requires StarCraft: Remastered.",
+    "ko": "SC4J용 스타크래프트: 리마스터. 스타크래프트: 리마스터 설치 필요."
   },
   "authors": ["Fog of War Labs"],
   "notices": [
@@ -26,8 +26,8 @@
       "required": true,
       "label": {"en": "StarCraft: Remastered folder", "ko": "스타크래프트: 리마스터 폴더"},
       "description": {
-        "en": "StarCraft: Remastered 1.23.10 folder",
-        "ko": "스타크래프트: 리마스터 1.23.10 폴더"
+        "en": "The folder where StarCraft: Remastered is installed",
+        "ko": "스타크래프트: 리마스터가 설치된 폴더"
       },
       "check": {"contains": [".build.info", "x86_64/StarCraft.exe"]},
       "message": {
