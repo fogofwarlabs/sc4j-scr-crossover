@@ -186,8 +186,7 @@ public final class ScrCrossoverUnitGraphics {
     public static @NotNull ScrCrossoverUnitGraphics register(@NotNull GameData gameData, @NotNull ScrModFiles files, @NotNull ScrCrossoverArtSet set,
                                                              @NotNull String name, @NotNull UnitType baseType, @NotNull UnitType flingyType,
                                                              @NotNull UnitType circleType, @NotNull Attack groundAttack, @NotNull Attack airAttack,
-                                                             @NotNull UnitType voiceType, int walkStep, int topSpeed, int @NotNull [] idleChances)
-    throws IOException {
+                                                             @NotNull UnitType voiceType, int walkStep, int topSpeed, int @NotNull [] idleChances) throws IOException {
         List<ScrCrossoverAnimation> animations = ScrCrossoverAnimation.readAll(files.readFile(set.getAnimations()));
         int baseUnit = ScrUnits.getNativeId(baseType);
         int circleSprite = gameData.getFlingyTypes().getSprite(gameData.getUnitTypes().getFlingyType(ScrUnits.getNativeId(circleType)));

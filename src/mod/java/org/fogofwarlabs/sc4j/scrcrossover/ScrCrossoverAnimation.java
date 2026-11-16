@@ -98,8 +98,7 @@ public final class ScrCrossoverAnimation {
      * @return the animation
      * @throws IOException if no animation has the name
      */
-    public static @NotNull ScrCrossoverAnimation find(@NotNull List<@NotNull ScrCrossoverAnimation> animations, @NotNull String name)
-    throws IOException {
+    public static @NotNull ScrCrossoverAnimation find(@NotNull List<@NotNull ScrCrossoverAnimation> animations, @NotNull String name) throws IOException {
         for (ScrCrossoverAnimation animation : animations) {
             if (animation.name.equals(name)) {
                 return animation;
