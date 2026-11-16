@@ -13,6 +13,7 @@ The [SC:R clone modder guide](docs/scr-crossover.md) shows every step with this 
 - [Clone and overlay](#clone-and-overlay)
 - [Build and run](#build-and-run)
 - [Art licences](#art-licences)
+- [Releases](#releases)
 - [Licence](#licence)
 
 ## Relation to the SC:R mod
@@ -88,6 +89,10 @@ With the engine checkout [sc4j](https://github.com/fogofwarlabs/sc4j) next to th
 | Unit art: the Myriarch (DRAGO 3D model by OSCAR CREATIVO) | CC BY 4.0 | [`third-party/myriarch/`](third-party/myriarch/) |
 
 The build packs each art set's `NOTICE.txt` and `license/` into the jar under `third-party/<set>/`, and the manifest's `license` line names the notation. Keep them when you publish a jar with these frames.
+
+## Releases
+
+A release is a pull request from `develop` into `main` that sets `version=X.Y.Z` in `gradle.properties` and moves the submodule `scr` to a commit whose `sc4jVersion` is a released engine version; the push to `main` creates the GitHub release `vX.Y.Z` with `scr-crossover.jar` and its checksum `scr-crossover.jar.sha256`.
 
 ## Licence
 

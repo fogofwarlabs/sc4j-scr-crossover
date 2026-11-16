@@ -13,6 +13,7 @@ SC4J용 모드입니다. 자기 정체성을 가진 [SC:R 모드](https://github
 - [복제와 오버레이](#복제와-오버레이)
 - [빌드와 실행](#빌드와-실행)
 - [그림 라이선스](#그림-라이선스)
+- [릴리스](#릴리스)
 - [라이선스](#라이선스)
 
 ## SC:R 모드와의 관계
@@ -88,6 +89,10 @@ SC:R 모드는 git 서브모듈 `scr`입니다. 빌드는 이를 포함하고 �
 | 유닛 그림: Myriarch(OSCAR CREATIVO의 DRAGO 3D 모델) | CC BY 4.0 | [`third-party/myriarch/`](third-party/myriarch/) |
 
 빌드가 그림 세트마다 `NOTICE.txt`와 `license/`를 jar의 `third-party/<set>/` 아래에 묶고, 매니페스트의 `license` 줄이 표기를 밝힙니다. 이 프레임이 든 jar를 공개할 때는 이를 유지합니다.
+
+## 릴리스
+
+릴리스는 `gradle.properties`의 `version=X.Y.Z`를 정하고 서브모듈 `scr`를 `sc4jVersion`이 릴리스된 엔진 버전인 커밋으로 옮기는 `develop`에서 `main`으로의 풀 리퀘스트입니다. `main`에 푸시되면 `scr-crossover.jar`와 그 체크섬 `scr-crossover.jar.sha256`이 붙은 GitHub 릴리스 `vX.Y.Z`가 만들어집니다.
 
 ## 라이선스
 
