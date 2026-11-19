@@ -545,7 +545,8 @@ public final class CloneRenderScenario {
                             int value = pixels.getInt((y * tile + x) * OverlayPass.RGBA_BYTES);
 
                             sheet[y * width + cell * tile + x] = value;
-                                                                 drawn |= value != first;
+
+                            drawn |= value != first;
                         }
                     }
 
