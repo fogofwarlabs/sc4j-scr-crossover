@@ -2,7 +2,7 @@
 
 [English](scr-crossover.md) | **한국어**
 
-SC:R 모드로 자신의 모드를 만드는 방법: 복제하고, 파일 몇 개를 바꾸고, jar 하나를 빌드해 `mods/`에 넣고, 런처에서 시작합니다. SC:R Crossover(이 저장소, 모드 id `scr-crossover`)가 모든 단계의 예시입니다. 처음부터 만드는 모드, 모드 API, 결정성, 네트워크 플레이는 [모드 제작 가이드](https://github.com/fogofwarlabs/sc4j/blob/main/docs/mod-guide.ko.md#18-기존-모드-복제)와 [API 정책](https://github.com/fogofwarlabs/sc4j/blob/main/docs/api-policy.ko.md)에 있습니다.
+SC:R 모드로 자신의 모드를 만드는 방법: 복제하고, 파일 몇 개를 바꾸고, jar 하나를 빌드해 `mods/`에 넣고, 런처에서 시작합니다. SC:R Crossover(이 저장소, 모드 id `scr-crossover`)가 모든 단계의 예시입니다. 처음부터 만드는 모드, 모드 API, 결정성, 네트워크 플레이는 [모드 제작 가이드](https://github.com/fogofwarlabs/sc4j/blob/main/docs/mod-guide.ko.md)와 [API 정책](https://github.com/fogofwarlabs/sc4j/blob/main/docs/api-policy.ko.md)에 있습니다.
 
 복제 모드는:
 
