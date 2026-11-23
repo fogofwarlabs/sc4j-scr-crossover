@@ -2,7 +2,7 @@
 
 **English** | [한국어](scr-crossover.ko.md)
 
-How to make your own mod from the SC:R mod: clone it, change a few files, build one jar, put it into `mods/` and start it from the launcher. SC:R Crossover (this repository, mod id `scr-crossover`) is the example for every step. Mods made from nothing, the mod API, determinism and network play are in the [mod author guide](https://github.com/fogofwarlabs/sc4j/blob/main/docs/mod-guide.md#18-clone-an-existing-mod) and the [API policy](https://github.com/fogofwarlabs/sc4j/blob/main/docs/api-policy.md).
+How to make your own mod from the SC:R mod: clone it, change a few files, build one jar, put it into `mods/` and start it from the launcher. SC:R Crossover (this repository, mod id `scr-crossover`) is the example for every step. Mods made from nothing, the mod API, determinism and network play are in the [mod author guide](https://github.com/fogofwarlabs/sc4j/blob/main/docs/mod-guide.md) and the [API policy](https://github.com/fogofwarlabs/sc4j/blob/main/docs/api-policy.md).
 
 A clone is:
 
