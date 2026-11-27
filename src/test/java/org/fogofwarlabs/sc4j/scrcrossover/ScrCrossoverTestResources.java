@@ -55,7 +55,7 @@ public final class ScrCrossoverTestResources {
 
     /**
      * @return the folder of the art sets of SC:R Crossover, one folder per set holding the baked frames, their {@code metadata.json}, the NOTICE and
-     * the license files
+     *         the license files
      * @throws IllegalStateException if the build did not name the folder
      */
     public static @NotNull Path getArtFolder() {
