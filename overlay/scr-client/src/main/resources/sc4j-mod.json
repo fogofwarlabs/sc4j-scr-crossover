@@ -28,10 +28,10 @@
         "en": "The folder where StarCraft: Remastered is installed",
         "ko": "스타크래프트: 리마스터가 설치된 폴더"
       },
-      "check": {"contains": [".build.info", "x86_64/StarCraft.exe"]},
+      "check": {"contains": [".build.info"], "containsAny": ["x86_64/StarCraft.exe", "x86_64/StarCraft.app/Contents/MacOS/StarCraft"]},
       "message": {
-        "en": "Not a StarCraft: Remastered folder (no .build.info or x86_64/StarCraft.exe)",
-        "ko": "스타크래프트: 리마스터 폴더가 아님 (.build.info 또는 x86_64/StarCraft.exe 없음)"
+        "en": "Not a StarCraft: Remastered folder",
+        "ko": "스타크래프트: 리마스터 폴더가 아님"
       },
       "detect": {"uninstallEntries": ["StarCraft"], "programFolders": ["StarCraft"]},
       "shared": "starcraft-remastered"
@@ -43,6 +43,26 @@
       "default": "enUS",
       "systemDefault": true,
       "label": {"en": "Text language", "ko": "텍스트 언어"}
+    },
+    {
+      "key": "translateChat",
+      "type": "boolean",
+      "default": true,
+      "label": {"en": "Translate chat", "ko": "채팅 번역"},
+      "description": {
+        "en": "Shows other players' chat in the text language",
+        "ko": "다른 플레이어의 채팅을 텍스트 언어로 표시"
+      }
+    },
+    {
+      "key": "translateMapText",
+      "type": "boolean",
+      "default": true,
+      "label": {"en": "Translate map texts", "ko": "맵 텍스트 번역"},
+      "description": {
+        "en": "Shows the texts of maps in the text language",
+        "ko": "맵의 텍스트를 텍스트 언어로 표시"
+      }
     }
   ]
 }
