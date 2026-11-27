@@ -97,7 +97,7 @@ public enum ScrCrossoverArtSet {
 
     /**
      * @return the distance of the shadow image below the image position, in SD pixels: the shadow frames' ground point is the shadow image's
-     * position, which the unit's script places this far below its own ({@code imgul})
+     *         position, which the unit's script places this far below its own ({@code imgul})
      */
     public int getShadowOffset() {
         return this.shadowOffset;
@@ -119,7 +119,7 @@ public enum ScrCrossoverArtSet {
 
     /**
      * @return the quality of the baked frames, {@link AssetResolver.AssetSet#HD} or {@link AssetResolver.AssetSet#HD2}: the frame files are made
-     * for it and for every lower HD quality, and the higher qualities draw its file
+     *         for it and for every lower HD quality, and the higher qualities draw its file
      */
     public AssetResolver.@NotNull AssetSet getBakedQuality() {
         return this.bakedQuality;
@@ -163,7 +163,7 @@ public enum ScrCrossoverArtSet {
 
     /**
      * @return the SD frames in true color: a PNG of {@link ScrCrossoverArtFiles#DIRECTIONS} canvases per row, one row per frame set, red, green, blue
-     * and alpha
+     *         and alpha
      */
     public @NotNull String getSdColors() {
         return this.getGraphicsFolder() + "sd-colors.png";
@@ -185,7 +185,7 @@ public enum ScrCrossoverArtSet {
 
     /**
      * @return the set of the overlay image the unit's attack creates at its overlay offsets ({@link #getOverlayOffsets()}), or {@code null} if the
-     * unit has none
+     *         unit has none
      */
     public @Nullable ScrCrossoverArtSet getOverlaySet() {
         return this == MYRIARCH ? MYRIARCH_FIRE : null;
@@ -193,7 +193,7 @@ public enum ScrCrossoverArtSet {
 
     /**
      * @return the overlay offsets of the frames, when the set has an overlay set ({@link #getOverlaySet()}): the root of the overlay image per
-     * frame of the unit's frames ({@link ScrCrossoverOverlayOffsets})
+     *         frame of the unit's frames ({@link ScrCrossoverOverlayOffsets})
      */
     public @NotNull String getOverlayOffsets() {
         return this.getGraphicsFolder() + "overlay-offsets.json";
